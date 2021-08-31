@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>cn.qtech</groupId>
+    <artifactId>minipekka</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- ________________________________________集群环境______________________________________________________-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <package.output.dir>${project.build.directory}</package.output.dir>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <scala.version>2.11.8</scala.version>
+        <scala.binary.version>2.11</scala.binary.version>
+
+        <slf4j.version>1.7.10</slf4j.version>
+        <hbase.version>1.2.4</hbase.version>
+        <phoenix.version>4.10.0-HBase-1.2</phoenix.version>
+
+        <spark.version>2.4.0</spark.version>
+        <hadoop.version>3.1.1</hadoop.version>
+
+        <kudu.version>1.10.0</kudu.version>
+        <hive.version>1.1.0</hive.version>
+        <kafka.version>1.1.0</kafka.version>
+        <couchbase.version>2.6.4</couchbase.version>
+
+    </properties>
+
+
+    <!--______________________________________dependencies start____________________________________________________-->
+    <dependencies>
+
+        <dependency>
+            <groupId>org.scala-lang</groupId>
+            <artifactId>scala-library</artifactId>
+            <version>${scala.version}</version>
+        </dependency>
+
+        <!-- ______________________________________ spark start____________________________________________________-->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-hive_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
+            <!--            <scope>provided</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-core_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-graphx_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-mllib_${scala.binary.version}</artifactId>
+            <version>${spark.version}</version>
+        </dependency>
+        <!-- __________________________________________spark end________________________________________________-->
+
+
+        <!-- _________________________________________ hadoop start________________________________________________-->
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-common</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-hdfs</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-client</artifactId>
+            <version>${hadoop.version}</version>
+        </dependency>
+        <!-- hadoop__________________________________________end________________________________________________-->
+
+
+        <!-- __________________________________________ hive start ______________________________________________-->
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.hive</groupId>
+                    <artifactId>hive-service-rpc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.hive</groupId>
+                    <artifactId>hive-service</artifactId>
+                </exclusion>
+            </exclusions>
+            <version>${hive.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.hive</groupId>
+            <artifactId>hive-service</artifactId>
+            <version>${hive.version}</version>
+        </dependency>
+        <!-- ___________________________________ hive end__________________________________________________-->
+
+
+        <!--  _____________________________________ml/dl lib start____________________________________________________-->
+
+        <dependency>
+            <groupId>ml.dmlc</groupId>
+            <artifactId>xgboost4j-spark</artifactId>
+            <version>0.90</version>
+        </dependency>
+
+        <!--  _____________________________________ml/dl lib end____________________________________________________-->
+
+
+        <!--  __________________________________________log start_______________________________________________-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--  __________________________________________log end_______________________________________________-->
+
+
+        <!-- _______________________________________kudu start______________________________________________-->
+        <!--        -cdh6.3.2-->
+        <dependency>
+            <groupId>org.apache.kudu</groupId>
+            <artifactId>kudu-client-tools</artifactId>
+            <version>${kudu.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kudu</groupId>
+            <artifactId>kudu-client</artifactId>
+            <version>${kudu.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kudu</groupId>
+            <artifactId>kudu-spark2_${scala.binary.version}</artifactId>
+            <version>${kudu.version}</version>
+        </dependency>
+        <!-- ______________________________________kudu end__________________________________________________-->
+
+
+        <!--_______________________________________ impala start______________________________________________-->
+        <dependency>
+            <groupId>com.cloudera</groupId>
+            <artifactId>ImpalaJDBC41</artifactId>
+            <version>${couchbase.version}</version>
+        </dependency>
+<!--        mvn install:install-file -DgroupId=com.cloudera -DartifactId=ImpalaJDBC41 -Dversion=2.6.4 -Dpackaging=jar -Dfile=.\ImpalaJDBC41-2.6.4.jar-->
+
+        <!-- _______________________________________impala 依赖 end_____________________________________________________-->
+
+
+        <!--  ______________________________________other start_________________________________________________-->
+        <!--        https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin-->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-dependency-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.play/play-mailer -->
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
+            <artifactId>play-mailer_${scala.binary.version}</artifactId>
+            <version>7.0.0</version>
+        </dependency>
+
+        <!-- _____________________________________other end_____________________________________________________-->
+
+    </dependencies>
+    <!--_________________________________________________dependencies start__________________________________________________________-->
+
+    <repositories>
+        <repository>
+            <id>alimaven</id>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <!-- _____________________________________________start building__________________________________________________-->
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <executions>
+                    <execution>
+                        <id>scala-compile-first</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <scalaVersion>${scala.version}</scalaVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <!--这部分可有可无,加上的话则直接生成可运行jar包-->
+                    <!--<archive>-->
+                    <!--<manifest>-->
+                    <!--<mainClass>${exec.mainClass}</mainClass>-->
+                    <!--</manifest>-->
+                    <!--</archive>-->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
